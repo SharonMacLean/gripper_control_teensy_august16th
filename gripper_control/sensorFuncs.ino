@@ -1,7 +1,7 @@
 #define forcePin1 A3       // load cell 1 pin
 #define forcePin2 A0       // load cell 2 pin
-#define flexPin1 A1        // flex sensor 1 pin
-#define flexPin2 A0        // flex sensor 2 pin
+#define flexPin1 A2        // flex sensor 1 pin
+#define flexPin2 A1        // flex sensor 2 pin
 
 
 int flexID1;
