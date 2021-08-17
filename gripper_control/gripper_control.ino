@@ -157,7 +157,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x03:{
+      case 0x03:{ //duty cycle
         byte* tempData;
         tempData = floatToByte((float)(motorStat.pwm/1024));
         for(int j = 0; j < 4; j++){
@@ -166,7 +166,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x04:{
+      case 0x04:{ //theta target (desired servo output angle)
         byte* tempData;
         tempData = intToByte(motorStat.posRef);
         for(int j = 0; j < 2; j++){
@@ -175,7 +175,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x05:{
+      case 0x05:{ //theta actual (actual servo output angle)
         byte* tempData;
         tempData = intToByte(motorStat.position);
         for(int j = 0; j < 2; j++){
@@ -184,20 +184,20 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x06:{
+      case 0x06:{ // omega target (desired servo angular speed)
         //unused for now, not included in STAT packet so it requires RAMread
       }
         break;
-      case 0x07:{
+      case 0x07:{ //omega actual (actual servo angular speed)
         //unused for now, not included in STAT packet so it requires RAMread
       }
         break;
-      case 0x08:{
+      case 0x08:{ //motor error
         packOut.data[k] = getError();
         k++;
       }
         break;
-      case 0x09:{
+      case 0x09:{ //load cell op amp output voltage
         byte* tempData;
         tempData = intToByte(getForceVoltage());
         for(int j = 0; j < 2; j++){
@@ -206,7 +206,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x0A:{
+      case 0x0A:{ //force calculated from load cell output (N)
         byte* tempData;
         tempData = floatToByte(getForce());
         for(int j = 0; j < 4; j++){
@@ -215,7 +215,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x0B:{
+      case 0x0B:{ //jaw position
         byte* tempData;
         //Serial.println(jawPosition);
         tempData = floatToByte(trackPosition());
@@ -226,7 +226,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x0C:{
+      case 0x0C:{ //deflection of gripper fingers
         byte* tempData;
         tempData = floatToByte(getFlex());
         for(int j = 0; j < 4; j++){
@@ -235,7 +235,7 @@ void sendParams(byte* params){
         }
       }
         break;
-      case 0x0D:{
+      case 0x0D:{ //flex sensor voltage
         byte* tempData;
         tempData = intToByte(getFlexVoltage());
         for(int j = 0; j < 2; j++){
