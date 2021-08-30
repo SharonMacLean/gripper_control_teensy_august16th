@@ -38,7 +38,7 @@ float C2[50] = {.25006,1,1,1,1,1,1,1,1,1,
 
 void EEPROMSetup(){
   //EEPROM.get(0,configParams);
-  configParams.forceSensorMode = 1;
+  configParams.forceSensorMode = 2;
   configParams.flexSensorMode = 2;
   configParams.sensForceID1 = 0;
   configParams.sensForceID2 = 1;
