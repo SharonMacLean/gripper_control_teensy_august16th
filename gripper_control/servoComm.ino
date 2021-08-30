@@ -42,6 +42,7 @@ void servoSetup(){
 
 // I'm concerned about the values that come out of the ram Read,
 // When I tried it in another file the values were way off
+// TODO: THIS METHOD IS SUPPOSED TO RETURN A FLOAT BUT DOES NOT RETURN ANY VALUES.
 float torqueControl(float torqueGoal){
   servoStatus = servo.readStatus();
   float torque = servoStatus.iBus/200;
