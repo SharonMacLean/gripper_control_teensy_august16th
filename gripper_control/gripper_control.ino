@@ -199,8 +199,8 @@ void sendParams(byte* params){
         break;
       case 0x09:{ //load cell op amp output voltage
         byte* tempData;
-        tempData = intToByte(getForceVoltage());
-        for(int j = 0; j < 2; j++){
+        tempData = floatToByte(getForceVoltage());
+        for(int j = 0; j < 4; j++){
           packOut.data[k] = tempData[j];
           k++;
         }
@@ -237,8 +237,8 @@ void sendParams(byte* params){
         break;
       case 0x0D:{ //flex sensor voltage
         byte* tempData;
-        tempData = intToByte(getFlexVoltage());
-        for(int j = 0; j < 2; j++){
+        tempData = floatToByte(getFlexVoltage());
+        for(int j = 0; j < 4; j++){
           packOut.data[k] = tempData[j];
           k++;
         }

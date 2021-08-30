@@ -43,6 +43,12 @@ float byteToFloat(byte* x){
   return tempData;
 }
 
+// This method translates a decimal number to a hexadecimal number.
+// TODO: This method has a crucial error.
+// If the resultant hexadecimal number contains a zero, this method discards the zero.
+// This results in the translated value being dramatically wrong.
+// Ex. 518base10 converts to 0x0206 (hex). However, the intToByte() method outputs 0x0026. 
+// (It discards the zero, giving the incorrect value). 
 byte* intToByte(int x){
   byte* tempData = (byte*)&x;
   return tempData;
