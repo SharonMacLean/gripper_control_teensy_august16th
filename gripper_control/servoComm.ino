@@ -1,4 +1,6 @@
-XYZrobotServo servo(Serial5, 1);
+#define HWSERIAL_MOTOR Serial5
+
+XYZrobotServo servo(HWSERIAL_MOTOR, 1);
 XYZrobotServoStatus servoStatus;
 
 #define switchPin A12    //gripper limit switch pin
@@ -25,7 +27,7 @@ float lastError = 0;
 float lastT = 0;
 
 void servoSetup(){
-  Serial5.begin(57600);
+  HWSERIAL_MOTOR.begin(57600);
   tGainP = configParams.tGainP;
   tGainI = configParams.tGainI;
   tScale = configParams.tScale;
