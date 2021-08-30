@@ -201,14 +201,14 @@ byte getError(){
 
 // This method returns the voltage currently applied to the A1-16 servo motor.
 float getServoVoltage() {
-      // Read the voltage from ram
-      uint8_t voltBuf[1];
-      servo.ramRead(54,voltBuf,1);
-      
-      //The datasheet says the value returned by ramRead is 16 times the actual voltage
-      float voltage = (float) voltBuf[0];
-      float real = voltage/16.00;
-      return real;
+  // Read the voltage from ram
+  uint8_t voltBuf[1];
+  servo.ramRead(54,voltBuf,1);
+  
+  //The datasheet says the value returned by ramRead is 16 times the actual voltage
+  float voltage = (float) voltBuf[0];
+  float real = voltage/16.00;
+  return real;
 }
 
 /* This method returns the desired servo angular speed that was set with .setSpeed().
@@ -226,11 +226,11 @@ int getOmegaTarget(){
 /* This method returns the actual current servo angular speed.
  *  Returns digital value between -1023 and 1023.*/
 int getOmegaActual(){
-    uint8_t speedBuf[2];
-    servo.ramRead(74,speedBuf,2);
-    int speedMotor = speedBuf[0] + (speedBuf[1] << 8);
-    if (speedMotor > 1023.00){
-      speedMotor = speedMotor - 65536;
-    }
-    return speedMotor;
+  uint8_t speedBuf[2];
+  servo.ramRead(74,speedBuf,2);
+  int speedMotor = speedBuf[0] + (speedBuf[1] << 8);
+  if (speedMotor > 1023.00){
+    speedMotor = speedMotor - 65536;
+  }
+  return speedMotor;
 }
