@@ -145,7 +145,12 @@ void sendParams(byte* params){
   for(int i = 0; i < 256; i++){
     switch(params[i]){
       case 0x01:{ //Voltage：The voltage currently applied to servo. 
-      
+        byte* tempData;
+        tempData = floatToByte(getServoVoltage());
+        for(int j = 0; j < 4; j++){
+          packOut.data[k] = tempData[j];
+          k++;
+        }
       }
         break;
       case 0x02:{ //current
@@ -186,10 +191,22 @@ void sendParams(byte* params){
         break;
       case 0x06:{ // omega target (desired servo angular speed) 
         // called "omega goal" by the XYZRobot Servo library, goal speed of speed close-loop control
+        byte* tempData;
+        tempData = floatToByte(getOmegaTarget());
+        for(int j = 0; j < 4; j++){
+          packOut.data[k] = tempData[j];
+          k++;
+        }
       }
         break;
       case 0x07:{ //omega actual (actual servo angular speed) 
         // called "omega ref" by the XYZRobot Servo library, ref speed of speed close-loop control
+        byte* tempData;
+        tempData = floatToByte(getOmegaActual());
+        for(int j = 0; j < 4; j++){
+          packOut.data[k] = tempData[j];
+          k++;
+        }
       }
         break;
       case 0x08:{ //motor error
