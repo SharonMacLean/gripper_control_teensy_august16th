@@ -40,12 +40,17 @@ void servoSetup(){
   
 //}
 
+// I'm concerned about the values that come out of the ram Read,
+// When I tried it in another file the values were way off
 float torqueControl(float torqueGoal){
   servoStatus = servo.readStatus();
   float torque = servoStatus.iBus/200;
+
+  // Reading current actual speed of the motor from Motor Ram
   uint8_t speedBuf[2];
   servo.ramRead(74,speedBuf,2);
   int speedMotor = byteToInt(speedBuf);
+  
   if(speedMotor < 0){
     torque *= -1;
   }
@@ -191,4 +196,40 @@ void rebootServo(){
 byte getError(){
   servoStatus = servo.readStatus();
   return servoStatus.statusError;
+}
+
+// This method returns the voltage currently applied to the A1-16 servo motor.
+float getServoVoltage() {
+      // Read the voltage from ram
+      uint8_t voltBuf[1];
+      servo.ramRead(54,voltBuf,1);
+      
+      //The datasheet says the value returned by ramRead is 16 times the actual voltage
+      float voltage = (float) voltBuf[0];
+      float real = voltage/16.00;
+      return real;
+}
+
+/* This method returns the desired servo angular speed that was set with .setSpeed().
+ * Returns digital value between -1023 and 1023.*/
+int getOmegaTarget(){
+  uint8_t speedBuf[2];
+  servo.ramRead(72,speedBuf,2);
+  int goalSpeed = speedBuf[0] + (speedBuf[1] << 8);
+  if (goalSpeed > 1023.00){
+    goalSpeed = goalSpeed - 65536;
+  }
+  return goalSpeed;
+}
+
+/* This method returns the actual current servo angular speed.
+ *  Returns digital value between -1023 and 1023.*/
+int getOmegaActual(){
+    uint8_t speedBuf[2];
+    servo.ramRead(74,speedBuf,2);
+    int speedMotor = speedBuf[0] + (speedBuf[1] << 8);
+    if (speedMotor > 1023.00){
+      speedMotor = speedMotor - 65536;
+    }
+    return speedMotor;
 }
