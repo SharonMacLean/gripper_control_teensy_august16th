@@ -52,9 +52,7 @@ float torqueControl(float torqueGoal){
   float torque = servoStatus.iBus/200;
 
   // Reading current actual speed of the motor from Motor Ram
-  uint8_t speedBuf[2];
-  servo.ramRead(74,speedBuf,2);
-  int speedMotor = byteToInt(speedBuf);
+  int speedMotor = getOmegaActual();
   
   if(speedMotor < 0){
     torque *= -1;
@@ -173,6 +171,9 @@ void homeServo(){
 
 void noTorque(){
   servo.torqueOff();
+  // The goal speed and actual speed of the servo stored in RAM do not update to zero when torqueOff() is called.
+  // Need to set the speed to zero so the values read from RAM will be accurate.
+  servo.setSpeed(0);
 }
 
 XYZrobotServoStatus getServoStatus(){
