@@ -4,6 +4,9 @@ XYZrobotServo servo(HWSERIAL_MOTOR, 1);
 XYZrobotServoStatus servoStatus;
 
 #define switchPin A12    //gripper limit switch pin
+#define ramAddress_Voltage 54
+#define ramAddress_OmegaTarget 72
+#define ramAddress_OmegaActual 74
 
 int servoSpeed = 0;
 int homePosInRev = 0;
@@ -36,6 +39,7 @@ void servoSetup(){
   homeServo();
   //servo.writeMaxPwmRam(1);
 }
+
 //float torqueControl(float torque){
   
 //}
@@ -55,6 +59,7 @@ float torqueControl(float torqueGoal){
   if(speedMotor < 0){
     torque *= -1;
   }
+  
   float smoothTorque = torqueBuffer(torque);
   float motorSpeed = (torqueGoal-smoothTorque)*tGainP;
   //float motorSpeed = torquePI(smoothTorque, torqueGoal);
@@ -203,7 +208,7 @@ byte getError(){
 float getServoVoltage() {
   // Read the voltage from ram
   uint8_t voltBuf[1];
-  servo.ramRead(54,voltBuf,1);
+  servo.ramRead(ramAddress_Voltage,voltBuf,1);
   
   //The datasheet says the value returned by ramRead is 16 times the actual voltage
   float voltage = (float) voltBuf[0];
@@ -215,7 +220,7 @@ float getServoVoltage() {
  * Returns digital value between -1023 and 1023.*/
 int getOmegaTarget(){
   uint8_t speedBuf[2];
-  servo.ramRead(72,speedBuf,2);
+  servo.ramRead(ramAddress_OmegaTarget,speedBuf,2);
   int goalSpeed = speedBuf[0] + (speedBuf[1] << 8);
   if (goalSpeed > 1023.00){
     goalSpeed = goalSpeed - 65536;
@@ -227,7 +232,7 @@ int getOmegaTarget(){
  *  Returns digital value between -1023 and 1023.*/
 int getOmegaActual(){
   uint8_t speedBuf[2];
-  servo.ramRead(74,speedBuf,2);
+  servo.ramRead(ramAddress_OmegaActual,speedBuf,2);
   int speedMotor = speedBuf[0] + (speedBuf[1] << 8);
   if (speedMotor > 1023.00){
     speedMotor = speedMotor - 65536;

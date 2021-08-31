@@ -2,16 +2,14 @@
 #define forcePin2 A0       // load cell 2 pin
 #define flexPin1 A2        // flex sensor 1 pin
 #define flexPin2 A1        // flex sensor 2 pin
-
+#define resolution 1023.00 //10 bit resolution
+#define maxPinVolt 3.3     //V
 
 int flexID1;
 int flexID2;
 
 float bias[50];
 float slope[50];
-
-float resolution = 1023.00;       //10 bit resolution
-float maxPinVolt = 3.3;    // V
 
 void sensorSetup(){
   flexID1 = configParams.sensFlexID1;
